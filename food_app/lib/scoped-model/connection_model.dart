@@ -10,9 +10,11 @@ class ConnectionModel extends Model {
   UserModel _authenticatedUser;
 
   int _selProductIndex;
+  bool isLoading = false;
 
   void addProducts(
       String title, String description, String price, String imgUrl) {
+        isLoading = true;
     Map<String, dynamic> productData = {
       'title': title,
       'description': description,
@@ -38,12 +40,16 @@ class ConnectionModel extends Model {
           email: _authenticatedUser.email,
           userId: _authenticatedUser.userId);
 
+
       _products.add(newProduct);
+      isLoading = false;
+      notifyListeners();
     });
     _selProductIndex = null;
   }
 
   void fetchData() {
+    isLoading = true;
     http
         .get('https://flutter-food-app.firebaseio.com/.json')
         .then((http.Response response) {
@@ -62,6 +68,7 @@ class ConnectionModel extends Model {
         fetchedProductList.add(product);
       });
       _products = fetchedProductList;
+      isLoading = false;
       notifyListeners();
     });
   }
@@ -147,3 +154,4 @@ class UserScopedModel extends ConnectionModel {
         UserModel(userId: 'xy1ys', email: email, password: password);
   }
 }
+  
