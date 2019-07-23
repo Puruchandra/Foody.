@@ -93,20 +93,25 @@ class _CreateStateProduct extends State<CreateProduct> {
   Widget _buildSaveBtn(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
-        return Center(
-          child: RaisedButton(
-            color: Theme.of(context).accentColor,
-            onPressed: () => _submitDetails(model.addProducts,
-                model.updateProduct, model.selectedProductIndex, model.selectProduct),
-            child: Text('Save'),
-          ),
-        );
+        return model.isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Center(
+                child: RaisedButton(
+                  color: Theme.of(context).accentColor,
+                  onPressed: () => _submitDetails(
+                      model.addProducts,
+                      model.updateProduct,
+                      model.selectedProductIndex,
+                      model.selectProduct),
+                  child: Text('Save'),
+                ),
+              );
       },
     );
   }
 
-  void _submitDetails(
-      Function addProduct, Function updateProduct, int selectedProductIndex, Function setSelectedIndex) {
+  void _submitDetails(Function addProduct, Function updateProduct,
+      int selectedProductIndex, Function setSelectedIndex) {
     //this is will only return true if all validates
     if (!_formKey.currentState.validate()) {
       return;
@@ -121,15 +126,20 @@ class _CreateStateProduct extends State<CreateProduct> {
         _formData['description'],
         _formData['price'].toString(),
         _formData['imgUrl'],
-      );
+      ).then((_) {
+        Navigator.pushReplacementNamed(context, '/product_home')
+            .then((_) => setSelectedIndex(null));
+      });
     } else
       updateProduct(
         _formData['title'],
         _formData['description'],
         _formData['price'].toString(),
         _formData['imgUrl'],
-      );
-    Navigator.pushReplacementNamed(context, '/product_home').then((_)=> setSelectedIndex(null));
+      ).then((_) {
+        Navigator.pushReplacementNamed(context, '/product_home')
+            .then((_) => setSelectedIndex(null));
+      });
   }
 
   Widget _buildFormContent(BuildContext context, ProductModel selectedProduct) {

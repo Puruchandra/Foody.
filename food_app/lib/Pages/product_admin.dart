@@ -1,10 +1,14 @@
  
+import 'package:first_app/scoped-model/main_model.dart';
 import 'package:flutter/material.dart';
 
 import 'create_product.dart';
 import 'list_product.dart';
 
 class ProductAdmin extends StatelessWidget {
+
+  MainModel model;
+  ProductAdmin(this.model);
    
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class ProductAdmin extends StatelessWidget {
         body: TabBarView(
           children: <Widget>[
             CreateProduct(),
-            ListProduct(),
+            ListProduct(model),
           ],
         ),
       ),
