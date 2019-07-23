@@ -3,7 +3,25 @@ import 'package:first_app/scoped-model/main_model.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class ListProduct extends StatelessWidget {
+class ListProduct extends StatefulWidget {
+
+  final MainModel model;
+  ListProduct(this.model);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ListProductState();
+  }
+ }
+
+class _ListProductState extends State<ListProduct> {
+
+  @override
+  initState(){
+    widget.model.fetchData();
+    super.initState();
+  }
+
   Widget _buildEditButton(
       BuildContext context, int index, MainModel model) {
     return IconButton(
@@ -24,6 +42,8 @@ class ListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+ 
     return ScopedModelDescendant<MainModel>(builder:
         (BuildContext context, Widget child, MainModel model) {
       return ListView.builder(
