@@ -47,10 +47,10 @@ class ConnectionModel extends Model {
     //  _selProductIndex = null;
   }
 
-  void fetchData() {
+  Future<Null> fetchData() {
     _isLoading = true;
     notifyListeners();
-    http
+    return http
         .get('https://flutter-food-app.firebaseio.com/.json')
         .then((http.Response response) {
       final List<ProductModel> fetchedProductList = [];
@@ -103,7 +103,16 @@ class ProductScopedModel extends ConnectionModel {
   }
 
   void deleteProduct() {
+    _isLoading = true;
+    final deletedId = selectedProduct.id;
     _products.removeAt(selectedProductIndex);
+    notifyListeners();
+    http
+        .delete('https://flutter-food-app.firebaseio.com/${deletedId}.json')
+        .then((http.Response res) {
+      _isLoading = false;
+      notifyListeners();
+    });
   }
 
   Future<Null> updateProduct(

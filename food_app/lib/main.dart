@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
             primarySwatch: Colors.lime,
             accentColor: Colors.lightBlue,
-            brightness: Brightness.light),
+            brightness: Brightness.light,appBarTheme: AppBarTheme(elevation: 0)),
         home: Authentication(),
         routes: {
           '/product_home': (BuildContext context) => ProductHome(model),
