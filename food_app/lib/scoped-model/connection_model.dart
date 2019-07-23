@@ -4,6 +4,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+//ConnectionModel wrapping  ProductScopedModel, UserScopedModel, UtilityModel                                           
 class ConnectionModel extends Model {
   List<ProductModel> _products = [];
   UserModel _authenticatedUser;
