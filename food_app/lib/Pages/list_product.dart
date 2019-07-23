@@ -65,7 +65,7 @@ class _ListProductState extends State<ListProduct> {
                 children: [
                   ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: AssetImage('assets/food.jpg'),
+                      backgroundImage: NetworkImage(model.allProducts[index].imgUrl),
                     ),
                     title: Text(model.allProducts[index].title),
                     subtitle:

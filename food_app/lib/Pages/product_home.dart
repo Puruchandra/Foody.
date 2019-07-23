@@ -25,7 +25,7 @@ class _ProductHomeState extends State<ProductHome> {
           return content = Center(child: CircularProgressIndicator());
         }
 
-        return content;
+        return RefreshIndicator(onRefresh: model.fetchData,child: content);
       },
     );
   }
